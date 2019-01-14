@@ -1,0 +1,67 @@
+name: Network
+version: '1.0'
+channels:
+  airlinechannel:
+    orderers:
+      - orderer.acme.com
+    peers:
+      acme-peer1.acme.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+      budget-peer1.budget.com:
+        endorsingPeer: true
+        chaincodeQuery: false
+        ledgerQuery: true
+        eventSource: false
+organizations:
+  Acme:
+    mspid: AcmeMSP
+    peers:
+      - acme-peer1.acme.com
+    certificateAuthorities:
+      - ca.caserver.com
+    adminPrivateKey:
+      path: >-
+        /vagrant/network/bin/../crypto/crypto-config/peerOrganizations/acme.com/users/Admin@acme.com/msp/keystore/2de85d725ae81a8babfb20be0574363e13476ebbd26ebbe46c3a2f5c3d4edad1_sk
+    signedCert:
+      path: >-
+        /vagrant/network/bin/../crypto/crypto-config/peerOrganizations/acme.com/users/Admin@acme.com/msp/signcerts/Admin@acme.com-cert.pem
+  Budget:
+    mspid: BudgetMSP
+    peers:
+      - budget-peer1.budget.com
+    certificateAuthorities:
+      - ca.caserver.com
+    adminPrivateKey:
+      path: >-
+        /vagrant/network/bin/../crypto/crypto-config/peerOrganizations/budget.com/users/Admin@budget.com/msp/keystore/53c3769f14a231c155fa4b1872bc768be05c0560e77c7d41c6d27b6e169ac0a7_sk
+    signedCert:
+      path: >-
+        /vagrant/network/bin/../crypto/crypto-config/peerOrganizations/budget.com/users/Admin@budget.com/msp/signcerts/Admin@budget.com-cert.pem
+orderers:
+  orderer.acme.com:
+    url: 'grpc://localhost:7050'
+    grpcOptions:
+      ssl-target-name-override: orderer.acme.com
+      grpc-max-send-message-length: 15
+peers:
+  acme-peer1.acme.com:
+    url: 'grpc://localhost:7051'
+    grpcOptions:
+      ssl-target-name-override: acme-peer1.acme.com
+      grpc.keepalive_time_ms: 600000
+  budget-peer1.budget.com:
+    url: 'grpc://localhost:8051'
+    grpcOptions:
+      ssl-target-name-override: budget-peer1.budget.com
+certificateAuthorities:
+  ca.caserver.com:
+    url: 'http://localhost:7054'
+    httpOptions:
+      verify: false
+    registrar:
+      - enrollId: admin
+        enrollSecret: adminpw
+    caName: caserver
