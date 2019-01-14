@@ -30,7 +30,7 @@ var cryptoType=process.argv[6]
 var cryptoFolder=process.argv[7]
 
 
-console.log("-->",listenerType,ccName,ccEvent)
+console.log("Launching Listener: "," type=",listenerType," cc Name=",ccName," event Name=",ccEvent)
 // console.log("---->",cryptoType, channelId)
 
 /**
@@ -111,10 +111,10 @@ function createYAMLCryptogen(obj){
     obj.organizations.Budget.signedCert.path=budgetCert
     obj.organizations.Budget.adminPrivateKey.path=budgetPk
 
-    console.log(acmeCert)
+    // console.log(acmeCert)
     yaml.writeSync("nw-config.yaml", obj)
 
-    console.log("Generated YAML")
+    console.log("+ Successfully generated Network config YAML")
 }
 
 function genCertPathCryptogen(org){ 
