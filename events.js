@@ -88,7 +88,7 @@ function chaincodeEventListener() {
 
     var cc_reg = channel_event_hub.registerChaincodeEvent(ccName,ccEvent,(event, block_num, txnid, status)=>{
         var payload = event.payload
-        let INFO_SYMBOL='\U1F6C8'
+        let INFO_SYMBOL='\u1f6c8'
         console.log(INFO_SYMBOL, 'event=',event.event_name,'-----',block_num,"--",status,"---",payload.toString('utf8') )
     }, (error)=>{
         console.log("Error:", error)
